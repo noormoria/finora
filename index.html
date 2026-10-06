@@ -928,6 +928,194 @@ html[dir=rtl] .trend-panel-copy{
   .coverage-track{max-width:31px}
 }
 
+
+/* Start to Explore dropdown inside the mountain box */
+.hero-explore-wrap{
+  position:relative;
+  margin-top:22px;
+  width:max-content;
+  max-width:100%;
+}
+.hero-explore-btn{
+  display:inline-flex;
+  align-items:center;
+  gap:9px;
+  border:1px solid rgba(255,255,255,.22);
+  border-radius:11px;
+  padding:11px 15px;
+  background:#fff;
+  color:var(--green-900);
+  cursor:pointer;
+  font-weight:800;
+  font-size:11px;
+  box-shadow:0 10px 24px rgba(0,0,0,.14);
+  transition:.18s ease;
+}
+.hero-explore-btn:hover{
+  transform:translateY(-1px);
+  box-shadow:0 14px 28px rgba(0,0,0,.17);
+}
+.hero-explore-btn svg{
+  width:15px;
+  height:15px;
+  transition:.2s ease;
+}
+.hero-explore-wrap.open .hero-explore-btn svg{
+  transform:rotate(180deg);
+}
+.hero-explore-menu{
+  position:absolute;
+  top:calc(100% + 9px);
+  left:0;
+  z-index:20;
+  width:min(680px,calc(100vw - 70px));
+  max-height:430px;
+  overflow:auto;
+  border:1px solid rgba(20,58,45,.10);
+  border-radius:17px;
+  background:rgba(255,255,255,.97);
+  color:var(--ink);
+  box-shadow:0 24px 60px rgba(7,31,24,.22);
+  backdrop-filter:blur(18px);
+  opacity:0;
+  visibility:hidden;
+  transform:translateY(-6px);
+  transition:.18s ease;
+}
+html[dir=rtl] .hero-explore-menu{
+  left:auto;
+  right:0;
+}
+.hero-explore-wrap.open .hero-explore-menu{
+  opacity:1;
+  visibility:visible;
+  transform:translateY(0);
+}
+.hero-explore-head{
+  position:sticky;
+  top:0;
+  z-index:2;
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:15px;
+  padding:16px 17px 13px;
+  border-bottom:1px solid var(--line);
+  background:rgba(255,255,255,.96);
+  backdrop-filter:blur(12px);
+}
+.hero-explore-head strong{
+  display:block;
+  color:var(--green-950);
+  font-size:12px;
+}
+.hero-explore-head span{
+  display:block;
+  margin-top:3px;
+  color:var(--muted);
+  font-size:9px;
+}
+.explore-close{
+  width:28px;
+  height:28px;
+  border:0;
+  border-radius:8px;
+  background:#eef3ef;
+  color:var(--green-900);
+  cursor:pointer;
+  font-size:17px;
+  line-height:1;
+}
+.hero-explore-content{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:0 12px;
+  padding:8px 13px 14px;
+}
+.explore-group{
+  padding:10px 4px;
+  border-bottom:1px solid var(--line);
+}
+.explore-group-title{
+  width:100%;
+  border:0;
+  background:transparent;
+  color:var(--green-900);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+  padding:4px 3px 7px;
+  text-align:left;
+  cursor:pointer;
+  font-size:10px;
+  font-weight:850;
+}
+html[dir=rtl] .explore-group-title{text-align:right}
+.explore-group-title span:last-child{
+  color:#9da8a2;
+  font-size:13px;
+}
+.explore-tools{
+  display:flex;
+  flex-wrap:wrap;
+  gap:5px;
+}
+.explore-tool{
+  border:1px solid rgba(20,58,45,.08);
+  border-radius:999px;
+  padding:6px 8px;
+  background:#f5f8f6;
+  color:#5c6a63;
+  cursor:pointer;
+  font-size:8.5px;
+  transition:.15s ease;
+}
+.explore-tool:hover{
+  background:#e7f0ea;
+  color:var(--green-800);
+  border-color:rgba(46,128,98,.18);
+}
+
+/* Three cards only below the green chart box */
+.stat-grid{
+  grid-template-columns:repeat(3,1fr);
+}
+.dashboard-extra{
+  grid-template-columns:1fr 1.15fr;
+}
+
+/* Green chart box no longer reserves room for stats */
+.trend-panel-copy{
+  width:430px;
+}
+.trend-chart{
+  width:62%;
+  height:78%;
+}
+
+@media(max-width:760px){
+  .hero-explore-menu{
+    position:fixed;
+    left:15px !important;
+    right:15px !important;
+    top:92px;
+    width:auto;
+    max-height:70vh;
+  }
+  .hero-explore-content{
+    grid-template-columns:1fr;
+  }
+  .stat-grid{
+    grid-template-columns:repeat(3,1fr);
+  }
+}
+@media(max-width:480px){
+  .stat-grid{
+    grid-template-columns:1fr;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -975,6 +1163,26 @@ html[dir=rtl] .trend-panel-copy{
     <div class="hero-kicker" data-t="heroKicker">Financial & accounting workspace</div>
     <h2>Finora</h2>
     <p data-t="heroText">Financial clarity, made simple. Practical tools for everyday financial and accounting decisions.</p>
+
+    <div class="hero-explore-wrap">
+     <button class="hero-explore-btn" type="button" onclick="toggleExploreMenu(event)">
+      <span data-t="startExplore">Start to Explore</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+       <path d="m6 9 6 6 6-6"/>
+      </svg>
+     </button>
+
+     <div id="heroExploreMenu" class="hero-explore-menu">
+      <div class="hero-explore-head">
+       <div>
+        <strong data-t="exploreMenuTitle">Explore Finora tools</strong>
+        <span data-t="exploreMenuHint">Choose a section or tool.</span>
+       </div>
+       <button type="button" class="explore-close" onclick="closeExploreMenu()" aria-label="Close">×</button>
+      </div>
+      <div id="heroExploreContent" class="hero-explore-content"></div>
+     </div>
+    </div>
    </div>
   </div>
 
@@ -983,12 +1191,6 @@ html[dir=rtl] .trend-panel-copy{
     <span class="trend-kicker" data-t="overview">Workspace overview</span>
     <h3 data-t="clarity">Financial clarity, built into every tool.</h3>
     <p data-t="overviewText">Move from calculation to insight with a focused set of financial and accounting tools.</p>
-
-    <div class="trend-stats">
-     <div><strong>37</strong><span data-t="tools">Tools</span></div>
-     <div><strong>7</strong><span data-t="sections">Sections</span></div>
-     <div><strong>AR / EN</strong><span data-t="languages">Languages</span></div>
-    </div>
    </div>
 
    <svg class="trend-chart" viewBox="0 0 900 260" preserveAspectRatio="none" aria-hidden="true">
@@ -1049,14 +1251,6 @@ html[dir=rtl] .trend-panel-copy{
      </div>
      <strong data-t="fast">Fast</strong>
      <span data-t="instant">Instant calculations</span>
-    </div>
-
-    <div class="stat-card stat-card-soft">
-     <div class="stat-icon">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3 5 6v5c0 5 3 8 7 10 4-2 7-5 7-10V6l-7-3Z"/><path d="m9 12 2 2 4-4"/></svg>
-     </div>
-     <strong>AR/EN</strong>
-     <span data-t="bilingual">Bilingual experience</span>
     </div>
    </div>
 
@@ -1216,6 +1410,9 @@ const tr={
   visualCoverage:"Visual coverage",
   coverageTitle:"Toolkit coverage",
   coverageText:"A visual look at Finora's financial sections.",
+  startExplore:"Start to Explore",
+  exploreMenuTitle:"Explore Finora tools",
+  exploreMenuHint:"Choose a section or tool.",
   quickAccess:"Quick access",
   trendKicker:"Visual analysis",
   trendTitle:"A clearer view of financial movement.",
@@ -1258,6 +1455,9 @@ const tr={
   visualCoverage:"تغطية بصرية",
   coverageTitle:"تغطية الأدوات",
   coverageText:"نظرة بصرية على أقسام Finora المالية.",
+  startExplore:"ابدأ الاستكشاف",
+  exploreMenuTitle:"استكشف أدوات Finora",
+  exploreMenuHint:"اختر القسم أو الأداة.",
   quickAccess:"وصول سريع",
   trendKicker:"تحليل بصري",
   trendTitle:"رؤية أوضح للحركة المالية.",
@@ -1312,6 +1512,52 @@ function categoryIcon(id){
   cash:`<svg viewBox="0 0 24 24" ${common}><path d="M4 8h16v10H4z"/><path d="M7 8V6h10v2"/><circle cx="12" cy="13" r="2.5"/></svg>`
  };
  return icons[id]||icons.accounting;
+}
+
+
+function buildHeroExplore(){
+ const box=document.getElementById("heroExploreContent");
+ if(!box)return;
+
+ box.innerHTML=categories.map(c=>`
+  <div class="explore-group">
+   <button class="explore-group-title" type="button" onclick="openExplorerCategory('${c[0]}')">
+    <span>${current==="en"?c[2]:c[3]}</span>
+    <span>›</span>
+   </button>
+   <div class="explore-tools">
+    ${c[4].map(x=>`
+      <button class="explore-tool" type="button" onclick="openToolFromExplore('${x[0]}')">
+       ${current==="en"?x[1]:x[2]}
+      </button>`).join("")}
+   </div>
+  </div>`).join("");
+}
+
+function toggleExploreMenu(event){
+ if(event)event.stopPropagation();
+ const wrap=document.querySelector(".hero-explore-wrap");
+ if(!wrap)return;
+ wrap.classList.toggle("open");
+}
+
+function closeExploreMenu(){
+ document.querySelector(".hero-explore-wrap")?.classList.remove("open");
+}
+
+function openToolFromExplore(id){
+ closeExploreMenu();
+ openTool(id);
+}
+
+function openExplorerCategory(categoryId){
+ closeExploreMenu();
+ const group=document.querySelector(`.group[data-category="${categoryId}"]`);
+ if(group){
+  document.querySelectorAll(".group").forEach(x=>x.classList.remove("open"));
+  group.classList.add("open");
+ }
+ openMobileMenu();
 }
 
 function buildMenus(){
@@ -1532,6 +1778,7 @@ function setLanguage(l){
 
  document.getElementById("search").placeholder=tr[l].search;
  buildMenus();
+ buildHeroExplore();
  buildAboutSections();
  buildPopular();
  buildRecent();
@@ -1552,8 +1799,13 @@ document.getElementById("ar").addEventListener("click",()=>setLanguage("ar"));
 document.getElementById("menuBtn").addEventListener("click",toggleMobileMenu);
 document.getElementById("sidebarOverlay").addEventListener("click",closeMobileMenu);
 window.addEventListener("resize",()=>{if(window.innerWidth>760)closeMobileMenu()});
+document.addEventListener("click",e=>{
+ const wrap=document.querySelector(".hero-explore-wrap");
+ if(wrap && !wrap.contains(e.target))closeExploreMenu();
+});
 
 buildMenus();
+buildHeroExplore();
 buildAboutSections();
 buildPopular();
 buildRecent();
