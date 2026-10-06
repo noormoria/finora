@@ -59,7 +59,7 @@ label{display:block;font-size:12px;font-weight:800;color:#4d6559;margin:0 0 6px}
 <main class="main">
  <div class="top">
   <input id="search" class="search" placeholder="Search for a tool..." oninput="filterMenu(this.value)">
-  <div class="lang"><button id="en" class="active" onclick="lang('en')">EN</button><button id="ar" onclick="lang('ar')">ع</button></div>
+  <div class="lang"><button id="en" class="active" onclick="setLanguage('en')">EN</button><button id="ar" onclick="setLanguage('ar')">ع</button></div>
  </div>
 
  <section id="homePage" class="page active">
@@ -91,7 +91,7 @@ label{display:block;font-size:12px;font-weight:800;color:#4d6559;margin:0 0 6px}
 
 <script>
 const categories=[
- ["market","↗","Market Analysis","تحليل السوق",[
+ ["market","↗︎","Market Analysis","تحليل السوق",[
   ["closing","Closing Analysis","تحليل الإغلاق"],["dailyReturn","Daily Returns","العائد اليومي"],["percent","Percentage Change","نسبة التغير"],["movingAverage","Moving Average","المتوسط المتحرك"],["volatility","Volatility","التذبذب"]]],
  ["accounting","▣","Accounting Tools","أدوات المحاسبة",[
   ["vat","VAT Calculator","حاسبة ضريبة القيمة المضافة"],["depreciation","Depreciation","الإهلاك"],["workingCapital","Working Capital","رأس المال العامل"],["cogs","Cost of Goods Sold","تكلفة البضاعة المباعة"],["inventoryTurnover","Inventory Turnover","دوران المخزون"],["receivablesTurnover","Receivables Turnover","دوران الذمم المدينة"]]],
@@ -180,7 +180,7 @@ function calculate(){
  document.getElementById("results").innerHTML=r.map(x=>`<div class="result"><small>${x[0]}</small><strong>${x[1].toLocaleString(current==="ar"?"ar-SA":"en-US",{maximumFractionDigits:2})}${x[2]||""}</strong></div>`).join("")
  }catch(e){alert(current==="en"?"Check the entered values.":"تحققي من القيم المدخلة.")}
 }
-function lang(l){
+function setLanguage(l){
  current=l;document.documentElement.lang=l;document.documentElement.dir=l==="ar"?"rtl":"ltr";document.getElementById("en").classList.toggle("active",l==="en");document.getElementById("ar").classList.toggle("active",l==="ar");
  document.querySelectorAll("[data-t]").forEach(e=>{let k=e.dataset.t;if(tr[l][k])e.textContent=tr[l][k]});document.getElementById("search").placeholder=tr[l].search;buildMenus();buildPopular();if(activeTool)openTool(activeTool)
 }
