@@ -1116,6 +1116,198 @@ html[dir=rtl] .explore-group-title{text-align:right}
   }
 }
 
+
+/* Fix green analysis box text */
+.trend-panel{
+  min-height:330px;
+  overflow:hidden;
+}
+.trend-panel-copy{
+  width:min(460px,52%);
+  max-width:52%;
+}
+.trend-panel h3{
+  max-width:100%;
+  font-size:clamp(24px,3vw,31px);
+  line-height:1.08;
+  overflow-wrap:anywhere;
+}
+.trend-panel-copy p{
+  max-width:100%;
+}
+.trend-chart{
+  width:58%;
+  height:72%;
+  right:0;
+  bottom:0;
+}
+
+@media(max-width:760px){
+  .trend-panel{
+    min-height:430px;
+  }
+  .trend-panel-copy{
+    position:relative;
+    top:auto;
+    left:auto;
+    right:auto;
+    width:100%;
+    max-width:none;
+    padding:24px 24px 0;
+  }
+  html[dir=rtl] .trend-panel-copy{
+    left:auto;
+    right:auto;
+  }
+  .trend-panel h3{
+    max-width:100%;
+    font-size:27px;
+    line-height:1.12;
+  }
+  .trend-panel-copy p{
+    max-width:100%;
+    font-size:11px;
+  }
+  .trend-chart{
+    width:100%;
+    height:56%;
+    left:0;
+    right:0;
+    bottom:0;
+    opacity:.96;
+  }
+  html[dir=rtl] .trend-chart{
+    left:0;
+    right:0;
+  }
+}
+@media(max-width:480px){
+  .trend-panel{
+    min-height:445px;
+  }
+  .trend-panel-copy{
+    padding:22px 20px 0;
+  }
+  .trend-panel h3{
+    font-size:25px;
+  }
+}
+
+
+/* Dedicated Explore page */
+.explore-page-head{
+  max-width:820px;
+  padding:12px 2px 26px;
+}
+.explore-back{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  margin-bottom:24px;
+  border:0;
+  border-radius:10px;
+  padding:8px 10px;
+  background:#e9f1ed;
+  color:var(--green-800);
+  cursor:pointer;
+  font-size:10px;
+  font-weight:800;
+}
+.explore-back svg{width:15px;height:15px}
+html[dir=rtl] .explore-back svg{transform:scaleX(-1)}
+.explore-page-head h1{
+  margin:7px 0 10px;
+  color:var(--green-950);
+  font-size:clamp(30px,4vw,48px);
+  line-height:1.05;
+  letter-spacing:-1.3px;
+}
+.explore-page-head p{
+  margin:0;
+  max-width:650px;
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.65;
+}
+.explore-page-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:14px;
+}
+.explore-page-section{
+  border:1px solid rgba(20,58,45,.08);
+  border-radius:18px;
+  padding:18px;
+  background:rgba(255,255,255,.86);
+  box-shadow:var(--shadow-sm);
+}
+.explore-page-section-head{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom:13px;
+}
+.explore-page-section-head .category-icon{
+  width:34px;height:34px;
+  display:grid;place-items:center;
+  border-radius:10px;
+  background:#e7f0ea;
+  color:var(--green-700);
+  flex:none;
+}
+.explore-page-section-head .category-icon svg{
+  width:18px;height:18px;
+}
+.explore-page-section-head strong{
+  color:var(--green-950);
+  font-size:13px;
+}
+.explore-page-section-head span{
+  display:block;
+  margin-top:2px;
+  color:#8a9690;
+  font-size:9px;
+}
+.explore-page-tools{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+.explore-page-tool{
+  width:100%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  border:1px solid rgba(20,58,45,.07);
+  border-radius:11px;
+  padding:10px 11px;
+  background:#f7faf8;
+  color:#56665e;
+  cursor:pointer;
+  text-align:left;
+  font-size:10px;
+  transition:.16s ease;
+}
+html[dir=rtl] .explore-page-tool{text-align:right}
+.explore-page-tool:hover{
+  background:#eaf2ed;
+  color:var(--green-800);
+  transform:translateY(-1px);
+}
+.explore-page-tool span:last-child{
+  color:#9aa59f;
+  font-size:15px;
+}
+html[dir=rtl] .explore-page-tool span:last-child{
+  transform:scaleX(-1);
+}
+
+@media(max-width:760px){
+  .explore-page-grid{grid-template-columns:1fr}
+  .explore-page-head{padding-top:4px}
+}
+
 </style>
 </head>
 <body>
@@ -1165,24 +1357,15 @@ html[dir=rtl] .explore-group-title{text-align:right}
     <p data-t="heroText">Financial clarity, made simple. Practical tools for everyday financial and accounting decisions.</p>
 
     <div class="hero-explore-wrap">
-     <button class="hero-explore-btn" type="button" onclick="toggleExploreMenu(event)">
+     <button class="hero-explore-btn" type="button" onclick="openExplorePage()">
       <span data-t="startExplore">Start to Explore</span>
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-       <path d="m6 9 6 6 6-6"/>
+       <path d="M5 12h14M13 6l6 6-6 6"/>
       </svg>
      </button>
-
-     <div id="heroExploreMenu" class="hero-explore-menu">
-      <div class="hero-explore-head">
-       <div>
-        <strong data-t="exploreMenuTitle">Explore Finora tools</strong>
-        <span data-t="exploreMenuHint">Choose a section or tool.</span>
-       </div>
-       <button type="button" class="explore-close" onclick="closeExploreMenu()" aria-label="Close">×</button>
-      </div>
-      <div id="heroExploreContent" class="hero-explore-content"></div>
-     </div>
     </div>
+   </div>
+  </div>
    </div>
   </div>
 
@@ -1298,6 +1481,23 @@ html[dir=rtl] .explore-group-title{text-align:right}
   </div>
  </section>
 
+ <section id="explorePage" class="page">
+  <div class="explore-page-head">
+   <button class="explore-back" type="button" onclick="home()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+     <path d="m15 18-6-6 6-6"/>
+    </svg>
+    <span data-t="backHome">Back to Home</span>
+   </button>
+
+   <span class="section-kicker" data-t="explorePageEyebrow">Explore Finora</span>
+   <h1 data-t="explorePageTitle">Choose a section, then open the tool you need.</h1>
+   <p data-t="explorePageText">All Finora tools are organized here by financial area for faster access.</p>
+  </div>
+
+  <div id="explorePageContent" class="explore-page-grid"></div>
+ </section>
+
  <section id="aboutPage" class="page">
   <div class="about-hero">
    <span class="about-eyebrow" data-t="aboutEyebrow">About Finora</span>
@@ -1411,6 +1611,10 @@ const tr={
   coverageTitle:"Toolkit coverage",
   coverageText:"A visual look at Finora's financial sections.",
   startExplore:"Start to Explore",
+  backHome:"Back to Home",
+  explorePageEyebrow:"Explore Finora",
+  explorePageTitle:"Choose a section, then open the tool you need.",
+  explorePageText:"All Finora tools are organized here by financial area for faster access.",
   exploreMenuTitle:"Explore Finora tools",
   exploreMenuHint:"Choose a section or tool.",
   quickAccess:"Quick access",
@@ -1456,6 +1660,10 @@ const tr={
   coverageTitle:"تغطية الأدوات",
   coverageText:"نظرة بصرية على أقسام Finora المالية.",
   startExplore:"ابدأ الاستكشاف",
+  backHome:"العودة للرئيسية",
+  explorePageEyebrow:"استكشف Finora",
+  explorePageTitle:"اختر القسم ثم افتح الأداة التي تحتاجها.",
+  explorePageText:"جميع أدوات Finora مرتبة هنا حسب المجال المالي للوصول بشكل أسرع.",
   exploreMenuTitle:"استكشف أدوات Finora",
   exploreMenuHint:"اختر القسم أو الأداة.",
   quickAccess:"وصول سريع",
@@ -1515,49 +1723,49 @@ function categoryIcon(id){
 }
 
 
-function buildHeroExplore(){
- const box=document.getElementById("heroExploreContent");
+
+
+
+
+
+
+
+
+
+
+
+function buildExplorePage(){
+ const box=document.getElementById("explorePageContent");
  if(!box)return;
 
  box.innerHTML=categories.map(c=>`
-  <div class="explore-group">
-   <button class="explore-group-title" type="button" onclick="openExplorerCategory('${c[0]}')">
-    <span>${current==="en"?c[2]:c[3]}</span>
-    <span>›</span>
-   </button>
-   <div class="explore-tools">
+  <section class="explore-page-section">
+   <div class="explore-page-section-head">
+    <span class="category-icon">${categoryIcon(c[0])}</span>
+    <div>
+     <strong>${current==="en"?c[2]:c[3]}</strong>
+     <span>${c[4].length} ${current==="en"?"tools":"أدوات"}</span>
+    </div>
+   </div>
+   <div class="explore-page-tools">
     ${c[4].map(x=>`
-      <button class="explore-tool" type="button" onclick="openToolFromExplore('${x[0]}')">
-       ${current==="en"?x[1]:x[2]}
+      <button class="explore-page-tool" type="button" onclick="openTool('${x[0]}')">
+       <span>${current==="en"?x[1]:x[2]}</span>
+       <span>›</span>
       </button>`).join("")}
    </div>
-  </div>`).join("");
+  </section>`).join("");
 }
 
-function toggleExploreMenu(event){
- if(event)event.stopPropagation();
- const wrap=document.querySelector(".hero-explore-wrap");
- if(!wrap)return;
- wrap.classList.toggle("open");
-}
-
-function closeExploreMenu(){
- document.querySelector(".hero-explore-wrap")?.classList.remove("open");
-}
-
-function openToolFromExplore(id){
- closeExploreMenu();
- openTool(id);
-}
-
-function openExplorerCategory(categoryId){
- closeExploreMenu();
- const group=document.querySelector(`.group[data-category="${categoryId}"]`);
- if(group){
-  document.querySelectorAll(".group").forEach(x=>x.classList.remove("open"));
-  group.classList.add("open");
- }
- openMobileMenu();
+function openExplorePage(){
+ document.getElementById("homePage").classList.remove("active");
+ document.getElementById("aboutPage").classList.remove("active");
+ document.getElementById("toolPage").classList.remove("active");
+ document.getElementById("explorePage").classList.add("active");
+ setPrimaryNav("tool");
+ buildExplorePage();
+ closeMobileMenu();
+ window.scrollTo({top:0,behavior:"smooth"});
 }
 
 function buildMenus(){
@@ -1654,6 +1862,7 @@ function setPrimaryNav(page){
 function home(){
  document.getElementById("toolPage").classList.remove("active");
  document.getElementById("aboutPage").classList.remove("active");
+ document.getElementById("explorePage").classList.remove("active");
  document.getElementById("homePage").classList.add("active");
  document.querySelectorAll(".sub").forEach(x=>x.classList.remove("active"));
  setPrimaryNav("home");
@@ -1665,6 +1874,7 @@ function home(){
 
 function about(){
  document.getElementById("toolPage").classList.remove("active");
+ document.getElementById("explorePage").classList.remove("active");
  document.getElementById("homePage").classList.remove("active");
  document.getElementById("aboutPage").classList.add("active");
  document.querySelectorAll(".sub").forEach(x=>x.classList.remove("active"));
@@ -1679,6 +1889,7 @@ function openTool(id,el,track=true){
  activeTool=id;
  document.getElementById("homePage").classList.remove("active");
  document.getElementById("aboutPage").classList.remove("active");
+ document.getElementById("explorePage").classList.remove("active");
  document.getElementById("toolPage").classList.add("active");
  setPrimaryNav("tool");
  document.querySelectorAll(".sub").forEach(x=>x.classList.toggle("active",x.dataset.id===id));
@@ -1778,7 +1989,7 @@ function setLanguage(l){
 
  document.getElementById("search").placeholder=tr[l].search;
  buildMenus();
- buildHeroExplore();
+ buildExplorePage();
  buildAboutSections();
  buildPopular();
  buildRecent();
@@ -1799,13 +2010,10 @@ document.getElementById("ar").addEventListener("click",()=>setLanguage("ar"));
 document.getElementById("menuBtn").addEventListener("click",toggleMobileMenu);
 document.getElementById("sidebarOverlay").addEventListener("click",closeMobileMenu);
 window.addEventListener("resize",()=>{if(window.innerWidth>760)closeMobileMenu()});
-document.addEventListener("click",e=>{
- const wrap=document.querySelector(".hero-explore-wrap");
- if(wrap && !wrap.contains(e.target))closeExploreMenu();
-});
+
 
 buildMenus();
-buildHeroExplore();
+buildExplorePage();
 buildAboutSections();
 buildPopular();
 buildRecent();
