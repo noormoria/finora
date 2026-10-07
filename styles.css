@@ -241,8 +241,16 @@ html[dir=rtl] .back-btn svg{transform:scaleX(-1)}
 .tool-head p{margin:5px 0 0;color:var(--muted);font-size:10.5px;line-height:1.45}
 .calc-grid{min-height:0;display:grid;grid-template-columns:1fr .88fr;gap:12px}
 .calc-panel{
-  min-height:0;overflow:auto;padding:18px;border:1px solid rgba(20,58,45,.09);
-  border-radius:18px;background:rgba(255,255,255,.92);box-shadow:var(--shadow)
+  min-height:0;
+  overflow:auto;
+  padding:18px;
+  border:1px solid rgba(20,58,45,.09);
+  border-radius:18px;
+  background:
+    radial-gradient(circle at 12% 10%,rgba(45,147,106,.12),transparent 30%),
+    radial-gradient(circle at 88% 88%,rgba(196,166,106,.10),transparent 28%),
+    linear-gradient(145deg,#fbfdfc 0%,#eef5f1 52%,#f7f3eb 100%);
+  box-shadow:var(--shadow)
 }
 .calc-panel h2{margin:0 0 13px;color:var(--g900);font-size:13px}
 .fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 12px}
@@ -338,4 +346,350 @@ html[dir=rtl] .formula{border-left:0;border-right:3px solid var(--gold)}
 @media(max-width:360px){
   .fields{grid-template-columns:1fr}
   .stat-row{grid-template-columns:1fr}
+}
+
+
+/* Restored Finora logo + global search */
+.brand-mark.original-logo{
+  background:transparent;
+  border-radius:0;
+  width:42px;
+  height:42px;
+}
+.finora-logo{
+  display:block;
+  width:100%;
+  height:100%;
+}
+.topbar{
+  position:relative;
+  display:grid;
+  grid-template-columns:auto auto minmax(0,1fr) auto;
+  align-items:center;
+  gap:10px;
+}
+.top-logo{
+  width:34px;
+  height:42px;
+  display:grid;
+  place-items:center;
+  flex:none;
+}
+.top-logo .finora-logo{
+  width:26px;
+  height:34px;
+}
+.search-wrap{
+  position:relative;
+  min-width:0;
+}
+.global-search{
+  width:100%;
+  min-width:0;
+  height:42px;
+  padding:0 14px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  outline:none;
+  background:rgba(255,255,255,.94);
+  color:var(--ink);
+  font-size:11px;
+  box-shadow:0 5px 15px rgba(7,31,24,.04);
+}
+.global-search::placeholder{color:#9aa59f}
+.global-search:focus{
+  border-color:rgba(31,121,88,.35);
+  box-shadow:0 0 0 4px rgba(31,121,88,.08);
+}
+.search-results{
+  position:absolute;
+  z-index:80;
+  top:calc(100% + 7px);
+  left:0;
+  right:0;
+  display:none;
+  max-height:340px;
+  overflow:auto;
+  border:1px solid rgba(20,58,45,.10);
+  border-radius:13px;
+  background:rgba(255,255,255,.98);
+  box-shadow:0 18px 42px rgba(7,31,24,.14);
+  backdrop-filter:blur(16px);
+}
+.search-results.open{display:block}
+.search-result{
+  width:100%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  border:0;
+  border-bottom:1px solid rgba(20,58,45,.07);
+  padding:11px 12px;
+  background:transparent;
+  color:var(--ink);
+  cursor:pointer;
+  text-align:left;
+}
+html[dir=rtl] .search-result{text-align:right}
+.search-result:last-child{border-bottom:0}
+.search-result:hover{background:#f3f7f4}
+.search-result strong{
+  display:block;
+  color:var(--g950);
+  font-size:10.5px;
+}
+.search-result small{
+  display:block;
+  margin-top:3px;
+  color:#8b9790;
+  font-size:8.5px;
+}
+.search-result .search-arrow{
+  color:#9ba69f;
+  font-size:16px;
+  flex:none;
+}
+html[dir=rtl] .search-result .search-arrow{transform:scaleX(-1)}
+.search-empty{
+  padding:13px;
+  color:#8b9790;
+  font-size:9.5px;
+}
+
+@media(max-width:850px){
+  .topbar{
+    grid-template-columns:auto auto minmax(0,1fr) auto;
+    gap:7px;
+  }
+  .top-logo{
+    width:26px;
+    height:38px;
+  }
+  .top-logo .finora-logo{
+    width:22px;
+    height:30px;
+  }
+  .global-search{
+    height:42px;
+    padding:0 11px;
+    font-size:10.5px;
+  }
+}
+@media(max-width:430px){
+  .main{padding-left:12px;padding-right:12px}
+  .topbar{gap:6px}
+  .menu-btn{width:40px;height:40px}
+  .top-logo{
+    width:22px;
+    height:40px;
+  }
+  .top-logo .finora-logo{
+    width:20px;
+    height:28px;
+  }
+  .lang button{
+    min-width:32px;
+    padding:7px 6px;
+  }
+}
+
+
+/* Theme controls */
+.top-controls{
+  display:flex;
+  align-items:center;
+  gap:7px;
+}
+.theme-toggle{
+  display:flex;
+  padding:3px;
+  border:1px solid var(--line);
+  border-radius:11px;
+  background:var(--surface);
+  box-shadow:0 5px 15px rgba(7,31,24,.04);
+}
+.theme-toggle button{
+  width:34px;
+  height:31px;
+  display:grid;
+  place-items:center;
+  border:0;
+  border-radius:8px;
+  background:transparent;
+  color:var(--muted);
+  cursor:pointer;
+}
+.theme-toggle button svg{
+  width:16px;
+  height:16px;
+}
+.theme-toggle button.active{
+  background:var(--g900);
+  color:#fff;
+}
+
+/* Theme-aware surfaces */
+:root{
+  --surface:#ffffff;
+  --surface-soft:#f7faf8;
+  --surface-muted:#eef4f0;
+  --page-a:#fbfdfc;
+  --page-b:#eef5f1;
+  --page-c:#f8f5ee;
+  --sidebar-a:#071f18;
+  --sidebar-b:#0b3025;
+  --sidebar-c:#104835;
+  --shadow-color:rgba(7,31,24,.08);
+}
+html[data-theme="dark"]{
+  --paper:#101713;
+  --white:#17201b;
+  --ink:#edf5f0;
+  --muted:#9fb0a7;
+  --line:#2a3931;
+  --surface:#18221d;
+  --surface-soft:#1b2821;
+  --surface-muted:#213128;
+  --page-a:#0d1411;
+  --page-b:#111b16;
+  --page-c:#151c18;
+  --sidebar-a:#06130e;
+  --sidebar-b:#0a2118;
+  --sidebar-c:#103525;
+  --shadow-color:rgba(0,0,0,.26);
+  --g950:#e7f5ed;
+  --g900:#d8eee2;
+  --g800:#b8dbc8;
+  --g700:#84bea0;
+  --g600:#63a986;
+  --g500:#4f9675;
+}
+
+html[data-theme="dark"] body{
+  background:
+    radial-gradient(circle at 8% 8%,rgba(61,129,96,.13),transparent 27%),
+    radial-gradient(circle at 92% 20%,rgba(196,166,106,.08),transparent 22%),
+    linear-gradient(135deg,var(--page-a) 0%,var(--page-b) 50%,var(--page-c) 100%);
+}
+html[data-theme="dark"] .sidebar{
+  background:linear-gradient(180deg,var(--sidebar-a) 0%,var(--sidebar-b) 53%,var(--sidebar-c) 100%);
+  box-shadow:12px 0 40px rgba(0,0,0,.22);
+}
+html[data-theme="dark"] .global-search,
+html[data-theme="dark"] .lang,
+html[data-theme="dark"] .theme-toggle,
+html[data-theme="dark"] .menu-btn,
+html[data-theme="dark"] .category-card,
+html[data-theme="dark"] .tool-card,
+html[data-theme="dark"] .calc-panel,
+html[data-theme="dark"] .about-intro,
+html[data-theme="dark"] .about-list,
+html[data-theme="dark"] .simple-panel,
+html[data-theme="dark"] .stat,
+html[data-theme="dark"] .bars{
+  background:rgba(24,34,29,.94);
+  color:var(--ink);
+  border-color:var(--line);
+  box-shadow:0 14px 40px var(--shadow-color);
+}
+html[data-theme="dark"] .section-head,
+html[data-theme="dark"] .category-card,
+html[data-theme="dark"] .tool-card{
+  background:linear-gradient(135deg,#19231e,#1d2b24);
+}
+html[data-theme="dark"] .global-search{
+  color:var(--ink);
+}
+html[data-theme="dark"] .global-search::placeholder{
+  color:#778980;
+}
+html[data-theme="dark"] .search-results{
+  background:rgba(19,28,23,.98);
+  border-color:var(--line);
+  box-shadow:0 18px 42px rgba(0,0,0,.30);
+}
+html[data-theme="dark"] .search-result{
+  color:var(--ink);
+  border-color:var(--line);
+}
+html[data-theme="dark"] .search-result:hover{
+  background:#213128;
+}
+html[data-theme="dark"] .field{
+  background:#121a16;
+  color:var(--ink);
+  border-color:#314239;
+}
+html[data-theme="dark"] .formula{
+  background:#1d251f;
+}
+html[data-theme="dark"] .mobile-tabs{
+  background:rgba(24,34,29,.90);
+}
+html[data-theme="dark"] .edit-btn{
+  background:#17201b;
+  color:var(--g800);
+}
+html[data-theme="dark"] .bar-track{
+  background:#26352d;
+}
+html[data-theme="dark"] .cat-icon,
+html[data-theme="dark"] .about-num{
+  background:#21372c;
+}
+html[data-theme="dark"] .tool-card:hover,
+html[data-theme="dark"] .category-card:hover{
+  background:#1f2d26;
+}
+html[data-theme="dark"] .link-list a:hover,
+html[data-theme="dark"] .recent-link:hover{
+  color:#9bcbb1;
+}
+
+@media(max-width:430px){
+  .top-controls{gap:5px}
+  .theme-toggle button{
+    width:30px;
+    height:30px;
+  }
+}
+
+
+/* Calculator visual identity */
+#resultPanel{
+  background:
+    radial-gradient(circle at 86% 12%,rgba(196,166,106,.12),transparent 28%),
+    radial-gradient(circle at 10% 88%,rgba(45,147,106,.09),transparent 30%),
+    linear-gradient(145deg,#f9fcfa 0%,#edf4ef 58%,#f5f1e9 100%);
+}
+
+/* Keep input fields clean and readable over the gradient */
+.field{
+  background:rgba(255,255,255,.82);
+  backdrop-filter:blur(8px);
+}
+.formula{
+  background:rgba(255,255,255,.58);
+  backdrop-filter:blur(8px);
+}
+
+/* Dark mode version of the calculator gradients */
+html[data-theme="dark"] .calc-panel{
+  background:
+    radial-gradient(circle at 12% 10%,rgba(79,150,117,.15),transparent 30%),
+    radial-gradient(circle at 88% 88%,rgba(196,166,106,.08),transparent 28%),
+    linear-gradient(145deg,#141e19 0%,#18251e 55%,#1b211c 100%);
+}
+html[data-theme="dark"] #resultPanel{
+  background:
+    radial-gradient(circle at 86% 12%,rgba(196,166,106,.10),transparent 28%),
+    radial-gradient(circle at 10% 88%,rgba(79,150,117,.12),transparent 30%),
+    linear-gradient(145deg,#131d18 0%,#17241d 58%,#1a211c 100%);
+}
+html[data-theme="dark"] .field{
+  background:rgba(14,22,18,.78);
+}
+html[data-theme="dark"] .formula{
+  background:rgba(19,28,23,.68);
 }
