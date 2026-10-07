@@ -99,35 +99,90 @@ const categoryDescriptions={
 
 
 
-function ensureThemeControl(){
-  if(document.querySelector(".theme-toggle")) return;
 
-  const langBox=document.querySelector(".lang");
-  if(!langBox) return;
+function finoraLogoSVG(suffix="Main"){
+  const a=`finoraA_${suffix}`;
+  const b=`finoraB_${suffix}`;
+  return `
+  <svg class="finora-original-logo" viewBox="0 0 64 82" aria-hidden="true">
+    <defs>
+      <linearGradient id="${a}" x1="0" y1="1" x2="1" y2="0">
+        <stop stop-color="#20a66a"/>
+        <stop offset="1" stop-color="#d7f4b7"/>
+      </linearGradient>
+      <linearGradient id="${b}" x1="0" y1="1" x2="1" y2="0">
+        <stop stop-color="#087447"/>
+        <stop offset="1" stop-color="#9fe5a7"/>
+      </linearGradient>
+    </defs>
+    <path fill="url(#${a})" d="M11 9C28 7 46 2 57 0c0 17-7 29-20 35-8 4-16 5-26 7V9Z"/>
+    <path fill="url(#${b})" d="M11 35c14-2 28-7 41-13-1 17-9 28-22 34-6 3-12 5-19 7V35Z"/>
+    <path fill="url(#${a})" d="M11 60c11-2 22-6 32-11-2 15-10 25-23 31l-9 2V60Z"/>
+  </svg>`;
+}
 
-  const controls=document.createElement("div");
-  controls.className="top-controls";
+function ensureHeaderUI(){
+  /* Restore the original green Finora logo in the sidebar */
+  const brandMark=document.querySelector(".brand-mark");
+  if(brandMark){
+    brandMark.classList.add("original-logo");
+    brandMark.innerHTML=finoraLogoSVG("Sidebar");
+  }
 
-  const theme=document.createElement("div");
-  theme.className="theme-toggle";
-  theme.setAttribute("aria-label","Theme");
-  theme.innerHTML=`
-    <button data-theme-btn="light" onclick="setTheme('light')" aria-label="Light mode" title="Light mode">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round">
-        <circle cx="12" cy="12" r="4"/>
-        <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
-      </svg>
-    </button>
-    <button data-theme-btn="dark" onclick="setTheme('dark')" aria-label="Dark mode" title="Dark mode">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M20.5 14.5A8 8 0 0 1 9.5 3.5 8.5 8.5 0 1 0 20.5 14.5Z"/>
-      </svg>
-    </button>`;
+  const topbar=document.querySelector(".topbar");
+  if(!topbar)return;
 
-  const parent=langBox.parentElement;
-  parent.insertBefore(controls,langBox);
-  controls.appendChild(theme);
-  controls.appendChild(langBox);
+  /* Remove the Finora/Calculator breadcrumb text from beside the language */
+  topbar.querySelector(".breadcrumb")?.remove();
+
+  /* The original header did not need a second logo beside the search */
+  topbar.querySelector(".top-logo")?.remove();
+
+  /* Restore the real search box even when the HTML file is an older version */
+  let searchWrap=topbar.querySelector(".search-wrap");
+  if(!searchWrap){
+    searchWrap=document.createElement("div");
+    searchWrap.className="search-wrap";
+    searchWrap.innerHTML=`
+      <input id="globalSearch" class="global-search"
+        type="search"
+        autocomplete="off"
+        data-en-placeholder="Search for a tool..."
+        data-ar-placeholder="ابحث عن أداة..."
+        placeholder="Search for a tool...">
+      <div id="searchResults" class="search-results"></div>`;
+
+    const menuButton=topbar.querySelector(".menu-btn");
+    if(menuButton) menuButton.insertAdjacentElement("afterend",searchWrap);
+    else topbar.prepend(searchWrap);
+  }
+
+  /* Put one Light/Dark toggle directly beside the language control */
+  const langBox=topbar.querySelector(".lang");
+  if(langBox){
+    let controls=topbar.querySelector(".top-controls");
+    if(!controls){
+      controls=document.createElement("div");
+      controls.className="top-controls";
+      langBox.insertAdjacentElement("beforebegin",controls);
+      controls.appendChild(langBox);
+    }
+
+    controls.querySelector(".theme-toggle")?.remove();
+
+    let themeButton=controls.querySelector(".theme-switch");
+    if(!themeButton){
+      themeButton=document.createElement("button");
+      themeButton.type="button";
+      themeButton.className="theme-switch";
+      themeButton.onclick=toggleTheme;
+      controls.insertBefore(themeButton,langBox);
+    }
+  }
+}
+
+function toggleTheme(){
+  setTheme(getTheme()==="dark" ? "light" : "dark");
 }
 
 function getTheme(){
@@ -137,9 +192,25 @@ function getTheme(){
 function applyTheme(){
   const theme=getTheme();
   document.documentElement.dataset.theme=theme;
+
   document.querySelectorAll("[data-theme-btn]").forEach(btn=>{
     btn.classList.toggle("active",btn.dataset.themeBtn===theme);
   });
+
+  const button=document.querySelector(".theme-switch");
+  if(button){
+    const isDark=theme==="dark";
+    button.innerHTML=isDark
+      ? `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round">
+           <circle cx="12" cy="12" r="4"/>
+           <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+         </svg>`
+      : `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+           <path d="M20.5 14.5A8 8 0 0 1 9.5 3.5 8.5 8.5 0 1 0 20.5 14.5Z"/>
+         </svg>`;
+    button.setAttribute("aria-label",isDark ? "Switch to light mode" : "Switch to dark mode");
+    button.title=isDark ? "Light mode" : "Dark mode";
+  }
 }
 
 function setTheme(theme){
@@ -176,7 +247,7 @@ function categoryIcon(id){
 }
 
 function renderChrome(){
- ensureThemeControl();
+ ensureHeaderUI();
  applyTheme();
  const l=lang();
  document.documentElement.lang=l;
