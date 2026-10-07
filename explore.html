@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Explore | Finora</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="explore">
+<div class="shell">
+
+<aside class="sidebar">
+  <div class="brand">
+    <span class="brand-mark">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M6 16c4.5 0 8-3.5 8-8-4.5 0-8 3.5-8 8Z"/><path d="M10 14c2.5 0 5 1.7 6 4"/>
+      </svg>
+    </span>
+    <div><strong>Finora</strong><small data-en="Financial clarity, made simple." data-ar="وضوح مالي ببساطة.">Financial clarity, made simple.</small></div>
+  </div>
+  <div class="side-top">
+    <a data-nav="home" href="index.html" data-en="Home" data-ar="الرئيسية">Home</a>
+    <a data-nav="about" href="about.html" data-en="About" data-ar="عن Finora">About</a>
+  </div>
+  <div class="side-label" data-en="Tools" data-ar="الأدوات">Tools</div>
+  <div id="sidebarMenus" class="side-menu"></div>
+</aside>
+<div id="overlay" class="overlay"></div>
+
+<main class="main">
+
+<header class="topbar">
+  <button class="menu-btn" onclick="toggleNav()" aria-label="Menu">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+  </button>
+  <div class="breadcrumb">Explore</div>
+  <div class="lang">
+    <button data-lang="en" onclick="setLang('en')">EN</button>
+    <button data-lang="ar" onclick="setLang('ar')">ع</button>
+  </div>
+</header>
+
+
+<section class="page-head">
+  <span class="eyebrow" data-en="Explore Finora" data-ar="استكشف Finora">Explore Finora</span>
+  <h1 data-en="Choose a financial area." data-ar="اختر المجال المالي.">Choose a financial area.</h1>
+  <p data-en="Start with the main category. You will see only its tools on the next page."
+     data-ar="ابدأ باختيار القسم الرئيسي، وفي الصفحة التالية ستظهر لك أدوات هذا القسم فقط.">
+     Start with the main category. You will see only its tools on the next page.
+  </p>
+</section>
+<section id="categoryGrid" class="category-grid"></section>
+
+</main>
+</div>
+<script src="app.js"></script>
+</body>
+</html>
