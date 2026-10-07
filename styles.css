@@ -938,3 +938,57 @@ html[data-theme="dark"] .arrow{
   color:#587268 !important;
   opacity:1 !important;
 }
+
+/* ===== FINORA: FORCE ALL ARROWS TO BE CLEAR ===== */
+
+/* Back arrow box */
+.back-btn{
+  background:#ffffff !important;
+  color:#0b3025 !important;
+  border-color:#b9cbc1 !important;
+}
+.back-btn svg,
+.back-btn svg path{
+  stroke:#0b3025 !important;
+  color:#0b3025 !important;
+  opacity:1 !important;
+}
+
+/* Category / tool / search / sidebar arrows */
+.tool-arrow,
+.go-arrow,
+.search-arrow,
+.side-cat-link,
+.arrow,
+.category-card .go-arrow,
+.tool-card .tool-arrow{
+  color:#315f4c !important;
+  opacity:1 !important;
+  font-weight:900 !important;
+}
+
+/* Dark mode: brighter arrows against dark green */
+html[data-theme="dark"] .tool-arrow,
+html[data-theme="dark"] .go-arrow,
+html[data-theme="dark"] .search-arrow,
+html[data-theme="dark"] .side-cat-link,
+html[data-theme="dark"] .arrow,
+html[data-theme="dark"] .category-card .go-arrow,
+html[data-theme="dark"] .tool-card .tool-arrow{
+  color:#bfe4d1 !important;
+  opacity:1 !important;
+}
+
+/* Keep the back arrow DARK even in dark mode because its box is white */
+html[data-theme="dark"] .back-btn{
+  background:#ffffff !important;
+  color:#0b3025 !important;
+  border-color:#d4e2da !important;
+}
+html[data-theme="dark"] .back-btn svg,
+html[data-theme="dark"] .back-btn svg path{
+  stroke:#0b3025 !important;
+  color:#0b3025 !important;
+  opacity:1 !important;
+}
+
