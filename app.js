@@ -97,6 +97,56 @@ const categoryDescriptions={
  }
 };
 
+
+
+function ensureThemeControl(){
+  if(document.querySelector(".theme-toggle")) return;
+
+  const langBox=document.querySelector(".lang");
+  if(!langBox) return;
+
+  const controls=document.createElement("div");
+  controls.className="top-controls";
+
+  const theme=document.createElement("div");
+  theme.className="theme-toggle";
+  theme.setAttribute("aria-label","Theme");
+  theme.innerHTML=`
+    <button data-theme-btn="light" onclick="setTheme('light')" aria-label="Light mode" title="Light mode">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round">
+        <circle cx="12" cy="12" r="4"/>
+        <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+      </svg>
+    </button>
+    <button data-theme-btn="dark" onclick="setTheme('dark')" aria-label="Dark mode" title="Dark mode">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20.5 14.5A8 8 0 0 1 9.5 3.5 8.5 8.5 0 1 0 20.5 14.5Z"/>
+      </svg>
+    </button>`;
+
+  const parent=langBox.parentElement;
+  parent.insertBefore(controls,langBox);
+  controls.appendChild(theme);
+  controls.appendChild(langBox);
+}
+
+function getTheme(){
+  return localStorage.getItem("finora_theme") || "light";
+}
+
+function applyTheme(){
+  const theme=getTheme();
+  document.documentElement.dataset.theme=theme;
+  document.querySelectorAll("[data-theme-btn]").forEach(btn=>{
+    btn.classList.toggle("active",btn.dataset.themeBtn===theme);
+  });
+}
+
+function setTheme(theme){
+  localStorage.setItem("finora_theme",theme);
+  applyTheme();
+}
+
 function lang(){return localStorage.getItem("finora_lang")||"en"}
 function setLang(l){localStorage.setItem("finora_lang",l);location.reload()}
 function t(k){return UI[lang()][k]||k}
@@ -126,6 +176,8 @@ function categoryIcon(id){
 }
 
 function renderChrome(){
+ ensureThemeControl();
+ applyTheme();
  const l=lang();
  document.documentElement.lang=l;
  document.documentElement.dir=l==="ar"?"rtl":"ltr";
@@ -133,6 +185,10 @@ function renderChrome(){
    el.textContent=l==="en"?el.dataset.en:el.dataset.ar;
  });
  document.querySelectorAll("[data-lang]").forEach(b=>b.classList.toggle("active",b.dataset.lang===l));
+ const search=document.getElementById("globalSearch");
+ if(search){
+   search.placeholder=l==="en"?search.dataset.enPlaceholder:search.dataset.arPlaceholder;
+ }
 
  const currentTool=new URLSearchParams(location.search).get("tool");
  const currentCat=new URLSearchParams(location.search).get("cat");
@@ -306,8 +362,66 @@ function renderAbout(){
   </div>`).join("");
 }
 
+
+function getSearchMatches(query){
+ const q=String(query||"").trim().toLowerCase();
+ if(!q)return [];
+ const matches=[];
+ for(const c of categories){
+   const categoryName=catName(c);
+   for(const tool of c[4]){
+     const name=toolName(tool);
+     const english=tool[1].toLowerCase();
+     const arabic=tool[2];
+     const catEn=c[2].toLowerCase();
+     const catAr=c[3];
+     if(name.toLowerCase().includes(q) || english.includes(q) || arabic.includes(q) || catEn.includes(q) || catAr.includes(q)){
+       matches.push({id:tool[0],name,category:categoryName});
+     }
+   }
+ }
+ return matches.slice(0,8);
+}
+
+function renderSearchResults(){
+ const input=document.getElementById("globalSearch");
+ const box=document.getElementById("searchResults");
+ if(!input||!box)return;
+ const matches=getSearchMatches(input.value);
+ const hasQuery=input.value.trim().length>0;
+ if(!hasQuery){
+   box.classList.remove("open");
+   box.innerHTML="";
+   return;
+ }
+ box.innerHTML=matches.length?matches.map(item=>`
+   <button class="search-result" type="button" onclick="location.href='tool.html?tool=${encodeURIComponent(item.id)}'">
+     <span><strong>${item.name}</strong><small>${item.category}</small></span>
+     <span class="search-arrow">›</span>
+   </button>`).join(""):`<div class="search-empty">${lang()==="en"?"No matching tools.":"لا توجد أدوات مطابقة."}</div>`;
+ box.classList.add("open");
+}
+
+function initGlobalSearch(){
+ const input=document.getElementById("globalSearch");
+ const box=document.getElementById("searchResults");
+ if(!input||!box)return;
+ input.addEventListener("input",renderSearchResults);
+ input.addEventListener("focus",renderSearchResults);
+ input.addEventListener("keydown",e=>{
+   if(e.key==="Enter"){
+     const first=getSearchMatches(input.value)[0];
+     if(first)location.href=`tool.html?tool=${encodeURIComponent(first.id)}`;
+   }
+ });
+ document.addEventListener("click",e=>{
+   if(!e.target.closest(".search-wrap"))box.classList.remove("open");
+ });
+}
+
 document.addEventListener("DOMContentLoaded",()=>{
  renderChrome();
+ initGlobalSearch();
  const page=document.body.dataset.page;
  if(page==="home")renderHome();
  if(page==="explore")renderExplore();
