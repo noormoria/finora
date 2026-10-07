@@ -868,3 +868,36 @@ html[data-theme="dark"] .primary-btn:focus{
   color:#071f18 !important;
   -webkit-text-fill-color:#071f18 !important;
 }
+
+
+/* Contrast fix: dark text on light-green UI boxes */
+html[data-theme="dark"] .lang button.active{
+  background:#d8eee2 !important;
+  color:#0b3025 !important;
+  -webkit-text-fill-color:#0b3025 !important;
+}
+
+html[data-theme="dark"] .mobile-tabs button.active{
+  background:#d8eee2 !important;
+  color:#0b3025 !important;
+  -webkit-text-fill-color:#0b3025 !important;
+}
+
+html[data-theme="dark"] .calc-btn{
+  background:linear-gradient(135deg,#eef8f1,#9fe0b8) !important;
+  color:#0b3025 !important;
+  -webkit-text-fill-color:#0b3025 !important;
+  border:1px solid rgba(255,255,255,.18);
+}
+
+html[data-theme="dark"] .calc-btn:hover,
+html[data-theme="dark"] .calc-btn:focus{
+  background:linear-gradient(135deg,#f6fcf8,#b8e8ca) !important;
+  color:#082419 !important;
+  -webkit-text-fill-color:#082419 !important;
+}
+
+html[data-theme="dark"] .primary-btn{
+  color:#0b3025 !important;
+  -webkit-text-fill-color:#0b3025 !important;
+}
