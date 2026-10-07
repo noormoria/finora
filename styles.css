@@ -901,3 +901,40 @@ html[data-theme="dark"] .primary-btn{
   color:#0b3025 !important;
   -webkit-text-fill-color:#0b3025 !important;
 }
+
+
+/* Arrow/icon contrast fix */
+html[data-theme="dark"] .back-btn{
+  background:#ffffff !important;
+  color:#0b3025 !important;
+  border-color:rgba(255,255,255,.88) !important;
+}
+
+html[data-theme="dark"] .back-btn svg{
+  stroke:#0b3025 !important;
+  opacity:1 !important;
+}
+
+html[data-theme="dark"] .tool-arrow,
+html[data-theme="dark"] .go-arrow,
+html[data-theme="dark"] .search-arrow,
+html[data-theme="dark"] .side-cat-link,
+html[data-theme="dark"] .arrow{
+  color:#b8dbc8 !important;
+  opacity:1 !important;
+}
+
+/* Also strengthen arrows in light mode */
+.back-btn{
+  color:#0b3025 !important;
+}
+.back-btn svg{
+  stroke:currentColor !important;
+  opacity:1 !important;
+}
+.tool-arrow,
+.go-arrow,
+.search-arrow{
+  color:#587268 !important;
+  opacity:1 !important;
+}
